@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="72dp"
         android:layout_marginEnd="32dp"
         android:fontFamily="sans-serif-medium"
         android:text="Pick some topics you are interested in."
@@ -38,17 +38,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_heading" />
 
-    <ListView
-        android:id="@+id/lv_interests"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_interests"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="80dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_body" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_body" />
 
 
 </android.support.constraint.ConstraintLayout>

@@ -29,6 +29,7 @@
         <activity
             android:name=".SignupActivity"
             android:label="@string/title_activity_signup"
+            android:parentActivityName=".LoginActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan|stateHidden" />
     </application>
