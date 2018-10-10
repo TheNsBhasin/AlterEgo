@@ -1,4 +1,4 @@
-package com.nsbhasin.alterego;
+package com.nsbhasin.alterego.ui;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -9,16 +9,20 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.ToggleButton;
 
+import com.nsbhasin.alterego.R;
+import com.nsbhasin.alterego.data.Interest;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class InterestsAdapter extends RecyclerView.Adapter<InterestsAdapter.InterestsViewHolder> {
-    private List<Interest> mDataset = new ArrayList<>();
+    private List<Interest> mInterests = new ArrayList<>();
 
-    InterestsAdapter(final String[] dataset) {
-        for (String data : dataset) {
-            mDataset.add(new Interest(data));
-        }
+    public InterestsAdapter() {
+    }
+
+    public InterestsAdapter(final List<Interest> interests) {
+        mInterests = interests;
     }
 
     @NonNull
@@ -33,9 +37,17 @@ public class InterestsAdapter extends RecyclerView.Adapter<InterestsAdapter.Inte
         holder.bind(position);
     }
 
+    public List<Interest> getInterests() {
+        return mInterests;
+    }
+
+    public void setInterests(List<Interest> interests) {
+        mInterests = interests;
+    }
+
     @Override
     public int getItemCount() {
-        return mDataset == null ? 0 : mDataset.size();
+        return mInterests == null ? 0 : mInterests.size();
     }
 
     class InterestsViewHolder extends RecyclerView.ViewHolder implements CompoundButton.OnCheckedChangeListener {
@@ -50,15 +62,15 @@ public class InterestsAdapter extends RecyclerView.Adapter<InterestsAdapter.Inte
         }
 
         void bind(final int position) {
-            mInterest.setText(mDataset.get(position).getInterest());
-            mInterest.setTextOn(mDataset.get(position).getInterest());
-            mInterest.setTextOff(mDataset.get(position).getInterest());
-            mInterest.setChecked(mDataset.get(position).isChecked());
+            mInterest.setText(mInterests.get(position).getInterest());
+            mInterest.setTextOn(mInterests.get(position).getInterest());
+            mInterest.setTextOff(mInterests.get(position).getInterest());
+            mInterest.setChecked(mInterests.get(position).isChecked());
         }
 
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            mDataset.get(getAdapterPosition()).setChecked(isChecked);
+            mInterests.get(getAdapterPosition()).setChecked(isChecked);
         }
     }
 }
