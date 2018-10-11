@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/grad_bg"
-    tools:context=".SignupActivity$SignupFragment">
+    tools:context=".ui.signup.SignupActivity$SignupFragment">
 
     <ImageView
         android:id="@+id/img_user"

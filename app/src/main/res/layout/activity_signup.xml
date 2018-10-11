@@ -8,7 +8,7 @@
     android:animateLayoutChanges="true"
     android:background="@drawable/grad_bg"
     android:fitsSystemWindows="true"
-    tools:context=".SignupActivity">
+    tools:context=".ui.signup.SignupFragment">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -16,8 +16,7 @@
         android:layout_height="?attr/actionBarSize"
         android:background="@color/colorPrimaryDark" />
 
-
-    <com.nsbhasin.alterego.NonSwipeableViewPager
+    <com.nsbhasin.alterego.ui.NonSwipeableViewPager
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

@@ -1,4 +1,6 @@
-package com.nsbhasin.alterego;
+package com.nsbhasin.alterego.data;
+
+import android.support.annotation.NonNull;
 
 public class Interest {
     private String interest;
@@ -27,5 +29,11 @@ public class Interest {
 
     public void setChecked(boolean checked) {
         isChecked = checked;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return interest;
     }
 }

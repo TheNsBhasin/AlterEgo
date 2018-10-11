@@ -38,11 +38,20 @@ public class InterestsAdapter extends RecyclerView.Adapter<InterestsAdapter.Inte
     }
 
     public List<Interest> getInterests() {
-        return mInterests;
+        List<Interest> interests = new ArrayList<>();
+        for (int i = 0; i < mInterests.size(); ++i) {
+            if (mInterests.get(i).isChecked()) {
+                interests.add(mInterests.get(i));
+            }
+        }
+        return interests;
     }
 
     public void setInterests(List<Interest> interests) {
-        mInterests = interests;
+        for (int i = 0; i < interests.size(); ++i) {
+            int index = mInterests.indexOf(interests.get(i));
+            mInterests.get(index).setChecked(true);
+        }
     }
 
     @Override
