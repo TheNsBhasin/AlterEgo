@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.nsbhasin.alterego.R;
-import com.nsbhasin.alterego.ui.login.LoginActivity;
+import com.nsbhasin.alterego.ui.main.MainActivity;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -16,8 +16,8 @@ public class SplashActivity extends AppCompatActivity {
         setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_splash);
 
-        Intent intent = new Intent(getApplicationContext(),
-                LoginActivity.class);
+        Intent intent = new Intent(SplashActivity.this,
+                MainActivity.class);
         startActivity(intent);
         finish();
     }

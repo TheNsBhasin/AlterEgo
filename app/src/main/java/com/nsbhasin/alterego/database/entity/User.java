@@ -1,9 +1,6 @@
-package com.nsbhasin.alterego.data;
+package com.nsbhasin.alterego.database.entity;
 
 import android.support.annotation.NonNull;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class User {
     public static final String MALE = "Male";
@@ -16,7 +13,7 @@ public class User {
     private String gender;
     private String tagline;
     private String image;
-    private List<Interest> interests;
+    private String interests;
 
     public User() {
         name = "";
@@ -26,14 +23,14 @@ public class User {
         image = "";
         email = "";
         password = "";
-        interests = new ArrayList<>();
+        interests = "";
     }
 
-    public User(List<Interest> interests) {
+    public User(String interests) {
         this.interests = interests;
     }
 
-    public User(String name, int age, String gender, String tagline, String image, List<Interest> interests) {
+    public User(String name, int age, String gender, String tagline, String image, String interests) {
         this.name = name;
         this.age = age;
         this.gender = gender;
@@ -98,33 +95,21 @@ public class User {
         this.gender = gender;
     }
 
-    public List<Interest> getInterests() {
+    public String getInterests() {
         return interests;
     }
 
-    public void setInterests(List<Interest> interests) {
+    public void setInterests(String interests) {
         this.interests = interests;
     }
 
     @NonNull
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder();
-        builder.append("Name: ")
-                .append(getName())
-                .append(", Age: ")
-                .append(getAge())
-                .append(", Gender: ")
-                .append(getGender())
-                .append(", Tagline: ")
-                .append(getTagline())
-                .append(", Interests: ");
-        for (int i = 0; i < getInterests().size(); ++i) {
-            if (getInterests().get(i).isChecked()) {
-                builder.append(interests.get(i).getInterest());
-                builder.append(", ");
-            }
-        }
-        return builder.toString();
+        return "Name: " + getName() +
+                ", Age: " + getAge() +
+                ", Gender: " + getGender() +
+                ", Tagline: " + getTagline() +
+                ", Interests: " + getInterests();
     }
 }

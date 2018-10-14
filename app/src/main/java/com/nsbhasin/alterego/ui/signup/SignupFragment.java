@@ -14,7 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.nsbhasin.alterego.R;
-import com.nsbhasin.alterego.data.User;
+import com.nsbhasin.alterego.database.entity.User;
 
 public class SignupFragment extends Fragment implements InterfaceCommunicator {
     private static final String TAG = SignupFragment.class.getSimpleName();

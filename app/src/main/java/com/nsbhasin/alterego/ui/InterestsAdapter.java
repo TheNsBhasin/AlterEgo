@@ -10,25 +10,27 @@ import android.widget.CompoundButton;
 import android.widget.ToggleButton;
 
 import com.nsbhasin.alterego.R;
-import com.nsbhasin.alterego.data.Interest;
+import com.nsbhasin.alterego.database.entity.Interest;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class InterestsAdapter extends RecyclerView.Adapter<InterestsAdapter.InterestsViewHolder> {
     private List<Interest> mInterests = new ArrayList<>();
+    private OnItemClickListener mListener;
 
     public InterestsAdapter() {
     }
 
-    public InterestsAdapter(final List<Interest> interests) {
+    public InterestsAdapter(final List<Interest> interests, OnItemClickListener onItemClickListener) {
         mInterests = interests;
+        mListener = onItemClickListener;
     }
 
     @NonNull
     @Override
-    public InterestsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int position) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_interest, parent, false);
+    public InterestsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, final int position) {
+        final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_interest, parent, false);
         return new InterestsViewHolder(view);
     }
 
@@ -37,21 +39,19 @@ public class InterestsAdapter extends RecyclerView.Adapter<InterestsAdapter.Inte
         holder.bind(position);
     }
 
-    public List<Interest> getInterests() {
-        List<Interest> interests = new ArrayList<>();
+    public String getInterests() {
+        char values[] = new char[mInterests.size()];
         for (int i = 0; i < mInterests.size(); ++i) {
-            if (mInterests.get(i).isChecked()) {
-                interests.add(mInterests.get(i));
-            }
+            values[i] = (mInterests.get(i).isChecked()) ? '1' : '0';
         }
-        return interests;
+        return new String(values);
     }
 
-    public void setInterests(List<Interest> interests) {
-        for (int i = 0; i < interests.size(); ++i) {
-            int index = mInterests.indexOf(interests.get(i));
-            mInterests.get(index).setChecked(true);
+    public void setInterests(String interests) {
+        for (int i = 0; i < interests.length(); ++i) {
+            mInterests.get(i).setChecked(interests.charAt(i) == '1');
         }
+        notifyDataSetChanged();
     }
 
     @Override
@@ -59,9 +59,14 @@ public class InterestsAdapter extends RecyclerView.Adapter<InterestsAdapter.Inte
         return mInterests == null ? 0 : mInterests.size();
     }
 
+    public interface OnItemClickListener {
+        void onItemClick();
+    }
+
     class InterestsViewHolder extends RecyclerView.ViewHolder implements CompoundButton.OnCheckedChangeListener {
         private ToggleButton mInterest;
         private Context mContext;
+        private boolean onBind;
 
         public InterestsViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -80,6 +85,7 @@ public class InterestsAdapter extends RecyclerView.Adapter<InterestsAdapter.Inte
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
             mInterests.get(getAdapterPosition()).setChecked(isChecked);
+            mListener.onItemClick();
         }
     }
 }

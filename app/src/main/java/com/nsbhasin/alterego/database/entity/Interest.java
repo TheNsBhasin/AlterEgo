@@ -1,4 +1,4 @@
-package com.nsbhasin.alterego.data;
+package com.nsbhasin.alterego.database.entity;
 
 import android.support.annotation.NonNull;
 

@@ -8,7 +8,6 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
@@ -23,7 +22,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.nsbhasin.alterego.R;
-import com.nsbhasin.alterego.ui.MainActivity;
+import com.nsbhasin.alterego.ui.main.MainActivity;
 import com.nsbhasin.alterego.ui.signup.SignupActivity;
 
 public class LoginActivity extends AppCompatActivity {
@@ -107,8 +106,7 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     });
                 } else {
-                    Log.d(TAG, "Registration failed: " + task.getException());
-                    Toast.makeText(LoginActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Login faild", Toast.LENGTH_SHORT).show();
                 }
             }
         });

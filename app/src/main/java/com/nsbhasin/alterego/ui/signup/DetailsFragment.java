@@ -17,7 +17,7 @@ import android.widget.ImageView;
 import android.widget.ToggleButton;
 
 import com.nsbhasin.alterego.R;
-import com.nsbhasin.alterego.data.User;
+import com.nsbhasin.alterego.database.entity.User;
 
 public class DetailsFragment extends Fragment implements InterfaceCommunicator {
     private static final String TAG = DetailsFragment.class.getSimpleName();
@@ -160,9 +160,9 @@ public class DetailsFragment extends Fragment implements InterfaceCommunicator {
             int age = getAge();
             String gender = getGender();
             String tagline = getTagline();
-            mViewModel.setAge(getAge());
-            mViewModel.setGender(getGender());
-            mViewModel.setTagline(getTagline());
+            mViewModel.setAge(age);
+            mViewModel.setGender(gender);
+            mViewModel.setTagline(tagline);
             Log.d(TAG, "onPageChanged -> Age: " + age + ", Gender: " + gender + ", Tagline: " + tagline);
         }
         return isDataValid;

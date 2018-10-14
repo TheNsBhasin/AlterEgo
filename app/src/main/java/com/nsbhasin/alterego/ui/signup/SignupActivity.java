@@ -6,17 +6,12 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.util.SparseArray;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -28,10 +23,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.nsbhasin.alterego.R;
-import com.nsbhasin.alterego.data.User;
-import com.nsbhasin.alterego.ui.MainActivity;
+import com.nsbhasin.alterego.database.entity.User;
 import com.nsbhasin.alterego.ui.NonSwipeableViewPager;
 import com.nsbhasin.alterego.ui.login.LoginActivity;
+import com.nsbhasin.alterego.ui.main.MainActivity;
 
 import java.util.HashMap;
 
@@ -43,7 +38,7 @@ public class SignupActivity extends AppCompatActivity {
 
     private static final String TAG = SignupActivity.class.getSimpleName();
 
-    private SectionsPagerAdapter mSectionsPagerAdapter;
+    private SignupPagerAdapter mSignupPagerAdapter;
 
     private NonSwipeableViewPager mViewPager;
 
@@ -74,10 +69,10 @@ public class SignupActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        mSignupPagerAdapter = new SignupPagerAdapter(getSupportFragmentManager());
 
         mViewPager = findViewById(R.id.container);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
+        mViewPager.setAdapter(mSignupPagerAdapter);
 
         final ViewPager.OnPageChangeListener onPageChangeListener = new ViewPager.OnPageChangeListener() {
             @Override
@@ -87,7 +82,7 @@ public class SignupActivity extends AppCompatActivity {
 
             @Override
             public void onPageSelected(int position) {
-                mCallback = (InterfaceCommunicator) mSectionsPagerAdapter.getRegisteredFragment(mViewPager.getCurrentItem());
+                mCallback = (InterfaceCommunicator) mSignupPagerAdapter.getRegisteredFragment(mViewPager.getCurrentItem());
             }
 
             @Override
@@ -146,6 +141,7 @@ public class SignupActivity extends AppCompatActivity {
                                 userMap.put("age", String.valueOf(user.getAge()));
                                 userMap.put("gender", user.getGender());
                                 userMap.put("tagline", user.getTagline());
+                                userMap.put("interests", user.getInterests());
                                 userMap.put("device_token", FirebaseInstanceId.getInstance().getToken());
 
                                 mDatabase.setValue(userMap).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -162,9 +158,7 @@ public class SignupActivity extends AppCompatActivity {
                                 });
                             }
                         } else {
-                            Log.d(TAG, "Registration failed: " + task.getException());
-                            Toast.makeText(SignupActivity.this, "Error", Toast.LENGTH_SHORT).show();
-
+                            Toast.makeText(SignupActivity.this, "Registration faild", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -173,59 +167,13 @@ public class SignupActivity extends AppCompatActivity {
     public void nextPage() {
         if (mCallback != null && mCallback.onPageChanged()) {
             int position = mViewPager.getCurrentItem();
-            if (position + 1 < mSectionsPagerAdapter.getCount()) {
+            if (position + 1 < mSignupPagerAdapter.getCount()) {
                 Log.d("SignupActivity", "Next position");
                 mViewPager.setCurrentItem(position + 1);
             } else {
                 Log.d("SignupActivity", "startMainActivity");
                 registerUser();
             }
-        }
-    }
-
-    public static class SectionsPagerAdapter extends FragmentPagerAdapter {
-        private static final int NUM_PAGES = 3;
-        private SparseArray<Fragment> registeredFragments = new SparseArray<>();
-
-        public SectionsPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            switch (position) {
-                case 0:
-                    return SignupFragment.newInstance();
-                case 1:
-                    return DetailsFragment.newInstance();
-                case 2:
-                    return InterestsFragment.newInstance();
-                default:
-                    return null;
-            }
-        }
-
-        @NonNull
-        @Override
-        public Object instantiateItem(@NonNull ViewGroup container, int position) {
-            Fragment fragment = (Fragment) super.instantiateItem(container, position);
-            registeredFragments.put(position, fragment);
-            return fragment;
-        }
-
-        @Override
-        public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-            registeredFragments.remove(position);
-            super.destroyItem(container, position, object);
-        }
-
-        public Fragment getRegisteredFragment(int position) {
-            return registeredFragments.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return NUM_PAGES;
         }
     }
 }

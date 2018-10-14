@@ -1,6 +1,5 @@
 package com.nsbhasin.alterego.ui.signup;
 
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
@@ -16,8 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.nsbhasin.alterego.R;
-import com.nsbhasin.alterego.data.Interest;
-import com.nsbhasin.alterego.data.User;
+import com.nsbhasin.alterego.database.entity.Interest;
 import com.nsbhasin.alterego.ui.InterestsAdapter;
 
 import java.util.ArrayList;
@@ -49,7 +47,7 @@ public class InterestsFragment extends Fragment implements InterfaceCommunicator
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_interests, container, false);
         Context context = inflater.getContext();
@@ -64,29 +62,25 @@ public class InterestsFragment extends Fragment implements InterfaceCommunicator
             mDataset.add(new Interest(interest));
         }
 
-        mAdapter = new InterestsAdapter(mDataset);
-        mInterests.setAdapter(mAdapter);
-
-        mViewModel.getUser().observe(this, new Observer<User>() {
+        mAdapter = new InterestsAdapter(mDataset, new InterestsAdapter.OnItemClickListener() {
             @Override
-            public void onChanged(@Nullable User user) {
-                if (user != null && mAdapter != null && user.getInterests() != null) {
-                    mAdapter.setInterests(user.getInterests());
-                    mAdapter.notifyDataSetChanged();
-                } else {
-                    mAdapter.setInterests(mDataset);
-                }
+            public void onItemClick() {
+                String interests = mAdapter.getInterests();
+                Log.d(TAG, "Interests:" + interests);
+                mViewModel.setInterests(interests);
             }
         });
+
+        mInterests.setAdapter(mAdapter);
 
         return view;
     }
 
     private boolean validate() {
-        List<Interest> interestList = mAdapter.getInterests();
+        String interests = mAdapter.getInterests();
         int count = 0;
-        for (int i = 0; i < interestList.size(); ++i) {
-            if (interestList.get(i).isChecked()) {
+        for (int i = 0; i < interests.length(); ++i) {
+            if (interests.charAt(i) == '1') {
                 ++count;
             }
         }

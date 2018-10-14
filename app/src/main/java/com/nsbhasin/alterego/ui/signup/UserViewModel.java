@@ -4,10 +4,7 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 
-import com.nsbhasin.alterego.data.Interest;
-import com.nsbhasin.alterego.data.User;
-
-import java.util.List;
+import com.nsbhasin.alterego.database.entity.User;
 
 public class UserViewModel extends ViewModel {
     private MutableLiveData<User> mLiveUser;
@@ -54,7 +51,7 @@ public class UserViewModel extends ViewModel {
         setUser(mUser);
     }
 
-    public void setInterests(List<Interest> interests) {
+    public void setInterests(String interests) {
         mUser.setInterests(interests);
         setUser(mUser);
     }
