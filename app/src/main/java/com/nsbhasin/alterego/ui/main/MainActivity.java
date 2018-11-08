@@ -17,6 +17,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
 import com.nsbhasin.alterego.R;
 import com.nsbhasin.alterego.ui.login.LoginActivity;
+import com.nsbhasin.alterego.utils.Constants;
 
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
@@ -46,8 +47,6 @@ public class MainActivity extends AppCompatActivity {
 
     private String mPrivateKeyString;
     private String mPublicKeyString;
-
-    private String ALTER_EGO_PREF = "alter_ego_prefs";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void generateKeys() throws NoSuchAlgorithmException {
-        SharedPreferences sharedPreferences = getSharedPreferences(ALTER_EGO_PREF, MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences(Constants.ALTER_EGO_PREF, MODE_PRIVATE);
         if (mAuth.getCurrentUser() != null) {
             mPrivateKeyString = sharedPreferences.getString("private_key" + mAuth.getCurrentUser().getUid(), null);
             mPublicKeyString = sharedPreferences.getString("public_key" + mAuth.getCurrentUser().getUid(), null);
@@ -129,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            SharedPreferences.Editor editor = getSharedPreferences(ALTER_EGO_PREF, MODE_PRIVATE).edit();
+                            SharedPreferences.Editor editor = getSharedPreferences(Constants.ALTER_EGO_PREF, MODE_PRIVATE).edit();
                             editor.putString("private_key" + mAuth.getCurrentUser().getUid(), mPrivateKeyString);
                             editor.putString("public_key" + mAuth.getCurrentUser().getUid(), mPublicKeyString);
                             editor.apply();

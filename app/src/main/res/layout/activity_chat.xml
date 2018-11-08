@@ -1,8 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.chat.ChatActivity">
+
+    <include
+        android:id="@+id/chat_appbar"
+        layout="@layout/chat_custom_bar" />
+
+    <TextView
+        android:id="@+id/encrypt_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Messages are secured using end-to-end encryption"
+        android:textColor="@color/colorTextPrimary"
+        android:textSize="12sp"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/chat_appbar" />
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_layout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/chat_bottom_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/chat_appbar">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_chats"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+    <LinearLayout
+        android:id="@+id/chat_bottom_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorPrimaryDark"
+        android:orientation="horizontal"
+        android:weightSum="10"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/swipe_layout">
+
+
+        <ImageButton
+            android:id="@+id/chat_add_but"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_weight="4.2"
+            android:background="@color/colorPrimaryDark"
+            android:src="@drawable/ic_add_a_photo_24px" />
+
+        <EditText
+            android:id="@+id/chat_message_text"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_weight="1.6"
+            android:background="@android:color/transparent"
+            android:hint="Type message..."
+            android:textColor="@color/colorTextPrimary"
+            android:textColorHint="@color/colorTextSecondary" />
+
+
+        <ImageButton
+            android:id="@+id/chat_send_but"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_weight="4.2"
+            android:background="@color/colorPrimaryDark"
+            android:src="@drawable/ic_send_24px" />
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
